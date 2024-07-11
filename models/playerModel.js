@@ -27,6 +27,12 @@ const playerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Team",
   },
+  payments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Payment",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Player", playerSchema);
