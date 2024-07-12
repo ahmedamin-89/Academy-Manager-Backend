@@ -1,12 +1,18 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
   {
-    email: {
+    phoneNumber: {
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
+
     password: {
       type: String,
       required: true,
@@ -15,6 +21,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       enum: ["admin", "coach", "player", "parent"],
+      default: "admin",
     },
     academy: {
       type: Schema.Types.ObjectId,
