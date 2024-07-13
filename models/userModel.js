@@ -7,12 +7,12 @@ const userSchema = new Schema(
     phoneNumber: {
       type: String,
       required: true,
+      unique: true,
     },
     name: {
       type: String,
       required: true,
     },
-
     password: {
       type: String,
       required: true,
@@ -27,6 +27,10 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Academy",
     },
+    playerProfile: {
+      type: Schema.Types.ObjectId,
+      ref: "Player",
+    },
   },
   { timestamps: true }
 );
@@ -34,9 +38,11 @@ const userSchema = new Schema(
 userSchema.statics.createAccount = async function (
   password,
   phoneNumber,
-  name
+  name,
+  role,
+  academy
 ) {
-  if (!password || !phoneNumber) {
+  if (!password || !phoneNumber || !name || !role) {
     throw Error("All fields must be filled");
   }
 
@@ -54,6 +60,8 @@ userSchema.statics.createAccount = async function (
       password: hash,
       phoneNumber,
       name,
+      role,
+      academy,
     });
 
     return user;

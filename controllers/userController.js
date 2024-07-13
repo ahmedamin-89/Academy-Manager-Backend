@@ -1,4 +1,4 @@
-const requireAuth = require("../middleware/requireAuth");
+const requireAuth = require("../middlewear/requireAuth");
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 

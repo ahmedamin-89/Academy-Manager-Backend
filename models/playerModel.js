@@ -1,23 +1,31 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const positions = [
+  "ST",
+  "LW/LM",
+  "RW/RM",
+  "CM/CDM",
+  "LB",
+  "CB",
+  "RB",
+  "GK",
+  "CAM",
+];
+
 const playerSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
   dateOfBirth: {
     type: Date,
     required: true,
   },
   position: {
-    type: String,
+    type: [String],
     required: true,
-    enum: ["goalkeeper", "defender", "midfielder", "forward"],
+    enum: positions,
   },
   academy: {
     type: Schema.Types.ObjectId,
@@ -33,6 +41,10 @@ const playerSchema = new Schema({
       ref: "Payment",
     },
   ],
+  parent: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 module.exports = mongoose.model("Player", playerSchema);
