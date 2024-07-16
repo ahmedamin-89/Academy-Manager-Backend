@@ -12,19 +12,21 @@ const teamSchema = new Schema(
       ref: "Academy",
       required: true,
     },
-    coach: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    coaches: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+
     players: [
       {
         type: Schema.Types.ObjectId,
         ref: "Player",
       },
     ],
-    yearOfBirth: {
-      type: Number,
+    yearsOfBirth: {
+      type: [Number],
       required: true,
     },
   },

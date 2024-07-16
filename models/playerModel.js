@@ -18,6 +18,23 @@ const playerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  name: {
+    type: String,
+    required: true,
+  },
+  parentName: {
+    type: String,
+    required: true,
+  },
+  parentPhoneNumber: {
+    type: String,
+    required: true,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+
   dateOfBirth: {
     type: Date,
     required: true,

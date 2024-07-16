@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 // Import routes
 const userRoutes = require("./routes/users");
 const academyRoutes = require("./routes/academies");
+const teamRoutes = require("./routes/teams");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 
 app.use("/api/users", userRoutes);
 app.use("/api/academies", academyRoutes);
+app.use("/api/teams", teamRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
