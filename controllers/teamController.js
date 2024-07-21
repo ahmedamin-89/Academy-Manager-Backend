@@ -41,3 +41,17 @@ exports.fetchTeams = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+exports.changeTeamPhoto = async (req, res) => {
+  const { teamId } = req.params;
+  const { photo } = req.body;
+  try {
+    const team = await Team.findById(teamId);
+
+    team.photo = photo;
+    res.status(200).json({ team });
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ error: error.message });
+  }
+};

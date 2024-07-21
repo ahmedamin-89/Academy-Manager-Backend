@@ -7,6 +7,10 @@ const teamSchema = new Schema(
       type: String,
       required: true,
     },
+    photo: {
+      type: String,
+    },
+
     academy: {
       type: Schema.Types.ObjectId,
       ref: "Academy",
