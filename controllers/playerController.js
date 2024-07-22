@@ -1,5 +1,5 @@
-const Player = require("./models/Player");
-const User = require("./models/User"); // Assuming you have a User model
+const User = require("../models/userModel");
+const Player = require("../models/playerModel");
 
 exports.createPlayer = async (req, res) => {
   const {

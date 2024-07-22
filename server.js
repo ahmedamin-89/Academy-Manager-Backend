@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/users");
 const academyRoutes = require("./routes/academies");
 const teamRoutes = require("./routes/teams");
+const playerRoutes = require("./routes/players");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 app.use("/api/users", userRoutes);
 app.use("/api/academies", academyRoutes);
 app.use("/api/teams", teamRoutes);
+app.use("/api/players", playerRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
