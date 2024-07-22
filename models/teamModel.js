@@ -7,15 +7,16 @@ const teamSchema = new Schema(
       type: String,
       required: true,
     },
-    photo: {
-      type: String,
-    },
 
     academy: {
       type: Schema.Types.ObjectId,
       ref: "Academy",
       required: true,
     },
+    imageName: {
+      type: String,
+    },
+
     coaches: [
       {
         type: Schema.Types.ObjectId,
@@ -32,6 +33,9 @@ const teamSchema = new Schema(
     yearsOfBirth: {
       type: [Number],
       required: true,
+    },
+    imageUrl: {
+      type: String,
     },
   },
   { timestamps: true }
