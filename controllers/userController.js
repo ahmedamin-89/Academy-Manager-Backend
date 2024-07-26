@@ -80,7 +80,6 @@ exports.fetchUser = async (req, res) => {
       .exec()
       .then((results) => results[0]);
 
-    console.log(academy);
     res.status(200).json({ user, academy });
   } catch (error) {
     console.log(error.message);
