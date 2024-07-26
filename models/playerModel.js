@@ -65,6 +65,13 @@ const playerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  yearOfBirth: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("Player", playerSchema);

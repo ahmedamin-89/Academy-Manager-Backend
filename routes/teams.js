@@ -3,6 +3,8 @@ const {
   createTeam,
   fetchTeams,
   changeTeamPhoto,
+  changeTeamInfo,
+  deleteTeam,
 } = require("../controllers/teamController");
 const requireAuth = require("../middlewear/requireAuth");
 const multer = require("multer");
@@ -15,6 +17,11 @@ const router = express.Router();
 router.use(requireAuth);
 router.post("/", createTeam);
 router.get("/", fetchTeams);
-router.post("/photo", upload.single("image"), changeTeamPhoto);
+
+router.post("/photo", upload.single("image"), changeTeamPhoto); // Change Team Photo
+
+router.patch("/info", changeTeamInfo); // Change Team Info
+
+router.delete("/:teamId", deleteTeam);
 
 module.exports = router;

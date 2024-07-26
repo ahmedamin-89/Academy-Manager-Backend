@@ -37,6 +37,13 @@ const teamSchema = new Schema(
     imageUrl: {
       type: String,
     },
+
+    trainings: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Training",
+      },
+    ],
   },
   { timestamps: true }
 );

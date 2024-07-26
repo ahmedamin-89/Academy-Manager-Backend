@@ -105,3 +105,29 @@ exports.changeTeamPhoto = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+exports.changeTeamInfo = async (req, res) => {
+  const { yearsOfBirth, name, teamId } = req.body;
+  try {
+    const team = await Team.findById(teamId);
+    team.name = name;
+    team.yearsOfBirth = yearsOfBirth;
+    await team.save();
+    res.status(200).json({ message: "Team Info changed" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+exports.deleteTeam = async (req, res) => {
+  const { teamId } = req.params;
+  try {
+    const team = await Team.findById(teamId);
+    const academy = await Academy.findById(team.academy);
+    academy.teams = academy.teams.filter((id) => id.toString() !== teamId);
+    await academy.save();
+    await Team.findByIdAndDelete(teamId);
+    res.status(200).json({ message: "Team deleted" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
