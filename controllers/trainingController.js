@@ -30,17 +30,8 @@ const getDayName = (date) => {
 };
 
 exports.createTraining = async (req, res) => {
-  const {
-    team,
-    date,
-    startTime,
-    endTime,
-    location,
-    dayNames,
-    description,
-    startDate,
-    endDate,
-  } = req.body;
+  const { team, startTime, endTime, location, dayNames, startDate, endDate } =
+    req.body;
   const user_id = req.user._id;
   const user = await User.findById(user_id);
 
