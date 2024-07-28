@@ -26,7 +26,7 @@ const trainingSchema = new Schema(
       type: String,
       required: true,
     },
-    days: [
+    dayNames: [
       {
         type: String,
         required: true,

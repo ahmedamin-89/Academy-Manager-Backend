@@ -12,5 +12,6 @@ router.use(requireAuth);
 router.post("/", createPlayer);
 router.get("/", fetchPlayers);
 router.get("/:teamId", fetchPlayers);
+router.get("/:teamId/:yearOfBirth", fetchPlayers);
 
 module.exports = router;

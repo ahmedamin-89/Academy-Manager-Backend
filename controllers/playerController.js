@@ -49,7 +49,6 @@ exports.fetchPlayers = async (req, res) => {
   const user_id = req.user._id;
   const { teamId } = req.params;
   const user = await User.findById(user_id);
-
   try {
     let players;
     if (teamId) {

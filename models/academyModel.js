@@ -35,6 +35,12 @@ const academySchema = new Schema(
     yearsOfBirth: {
       type: [Number],
     },
+    trainings: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Training",
+      },
+    ],
   },
   { timestamps: true }
 );
