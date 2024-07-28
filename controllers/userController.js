@@ -2,6 +2,7 @@ const requireAuth = require("../middlewear/requireAuth");
 const User = require("../models/userModel");
 const Academy = require("../models/academyModel");
 const jwt = require("jsonwebtoken");
+const Player = require("../models/playerModel");
 
 const createToken = (_id) =>
   jwt.sign({ _id }, process.env.USER_AUTH_KEY, { expiresIn: "180d" });
@@ -70,6 +71,7 @@ exports.fetchUser = async (req, res) => {
           _id: 1,
           name: 1,
           teams: 1,
+          players: 1,
           teams: {
             _id: 1,
             name: 1,
@@ -80,7 +82,21 @@ exports.fetchUser = async (req, res) => {
       .exec()
       .then((results) => results[0]);
 
-    res.status(200).json({ user, academy });
+    const yearsOfBirth = Array.from(
+      new Set(
+        (await Player.find({ academy: academy._id }).select("yearOfBirth")).map(
+          (player) => player.yearOfBirth
+        )
+      )
+    ).sort();
+
+    res.status(200).json({
+      user,
+      academy: {
+        ...academy,
+        yearsOfBirth,
+      },
+    });
   } catch (error) {
     console.log(error.message);
     res.status(400).json({ error: error.message });

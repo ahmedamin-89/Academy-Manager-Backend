@@ -26,6 +26,15 @@ const academySchema = new Schema(
         ref: "User",
       },
     ],
+    coaches: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Coach",
+      },
+    ],
+    yearsOfBirth: {
+      type: [Number],
+    },
   },
   { timestamps: true }
 );

@@ -20,7 +20,7 @@ const teamSchema = new Schema(
     coaches: [
       {
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "Coach",
       },
     ],
 
