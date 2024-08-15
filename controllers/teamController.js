@@ -82,7 +82,7 @@ exports.fetchTeams = async (req, res) => {
 };
 
 exports.changeTeamPhoto = async (req, res) => {
-  const { photo, teamId } = req.body;
+  const { teamId } = req.body;
   try {
     const params = {
       Bucket: bucketName,
@@ -127,6 +127,32 @@ exports.deleteTeam = async (req, res) => {
     await academy.save();
     await Team.findByIdAndDelete(teamId);
     res.status(200).json({ message: "Team deleted" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.fetchTeam = async (req, res) => {
+  const { teamId } = req.params;
+  try {
+    const team = await Team.findById(teamId)
+      .populate("players")
+      .populate("trainings");
+
+    for (const player of team.players) {
+      if (!player.imageName) {
+        continue;
+      }
+      const getObjectParams = {
+        Bucket: bucketName,
+        Key: player.imageName,
+      };
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+      player.imageUrl = url;
+    }
+
+    res.status(200).json({ team });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

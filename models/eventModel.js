@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const eventSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: true,
     },
@@ -33,16 +33,17 @@ const eventSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Academy",
     },
+    attendees: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Player",
+      },
+    ],
+
     teams: [
       {
         type: Schema.Types.ObjectId,
         ref: "Team",
-      },
-    ],
-    participants: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Player",
       },
     ],
   },

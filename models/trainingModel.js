@@ -16,7 +16,18 @@ const trainingSchema = new Schema(
     area: {
       type: String,
       required: true,
-      enum: ["New Cairo"],
+      enum: [
+        "New Cairo",
+        "Heliopolis",
+        "Nasr City",
+        "Sheikh Zayed",
+        "Al Shorouk",
+        "Al Rehab",
+        "Maadi",
+        "Mokattam",
+        "Downtown",
+        "6th of October",
+      ],
     },
     startTime: {
       type: String,
@@ -38,6 +49,11 @@ const trainingSchema = new Schema(
         ref: "Event",
       },
     ],
+    academy: {
+      type: Schema.Types.ObjectId,
+      ref: "Academy",
+      required: true,
+    },
   },
   {}
 );

@@ -5,6 +5,7 @@ const {
   changeTeamPhoto,
   changeTeamInfo,
   deleteTeam,
+  fetchTeam,
 } = require("../controllers/teamController");
 const requireAuth = require("../middlewear/requireAuth");
 const multer = require("multer");
@@ -23,6 +24,7 @@ router.post("/photo", upload.single("image"), changeTeamPhoto); // Change Team P
 
 router.patch("/info", changeTeamInfo); // Change Team Info
 
+router.get("/:teamId", fetchTeam);
 router.delete("/:teamId", deleteTeam);
 
 router.post("/training", createTraining);
