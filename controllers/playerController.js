@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const Player = require("../models/playerModel");
 const Academy = require("../models/academyModel");
 const Team = require("../models/teamModel");
+const Event = require("../models/eventModel");
 const {
   S3Client,
   PutObjectCommand,
@@ -167,6 +168,42 @@ exports.modifyAttendanceCount = async (req, res) => {
     res.status(200).json({ message: "Player attendance count updated" });
   } catch (error) {
     console.error("Error updating player attendance count:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.getSessionAttendanceRate = async (req, res) => {
+  const { playerId } = req.params;
+  console.log("Fetching session attendance rate for player:", playerId);
+
+  try {
+    const player = await Player.findById(playerId);
+    const joiningDate = player.createdAt;
+    const currentDate = new Date();
+    console.log("Joining date:", joiningDate);
+    console.log("Current date:", currentDate);
+
+    const playerSessions = await Event.find({
+      academy: player.academy,
+      date: { $gte: joiningDate, $lte: currentDate },
+    });
+
+    const attendedSessions = playerSessions.filter((session) =>
+      session.attendees.includes(playerId)
+    );
+
+    const attendanceRate = attendedSessions.length / playerSessions.length;
+    console.log("Attendance rate:", attendanceRate);
+
+    const attendedSessionsCount = attendedSessions.length;
+    const unAttendedSessionsCount =
+      playerSessions.length - attendedSessionsCount;
+
+    res
+      .status(200)
+      .json({ attendanceRate, attendedSessionsCount, unAttendedSessionsCount });
+  } catch (error) {
+    console.error("Error fetching session attendance rate:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
