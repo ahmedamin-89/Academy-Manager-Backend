@@ -151,3 +151,22 @@ exports.deletePlayer = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+exports.modifyAttendanceCount = async (req, res) => {
+  const { playerId } = req.params;
+  const { increment } = req.body;
+  try {
+    const player = await Player.findById(playerId);
+    if (increment) {
+      player.attendanceCount += 1;
+    } else {
+      player.attendanceCount -= 1;
+    }
+    await player.save();
+
+    res.status(200).json({ message: "Player attendance count updated" });
+  } catch (error) {
+    console.error("Error updating player attendance count:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

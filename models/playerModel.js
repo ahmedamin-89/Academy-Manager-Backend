@@ -79,6 +79,11 @@ const playerSchema = new Schema(
     imageUrl: {
       type: String,
     },
+    attendanceCount: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
   },
   { timestamps: true }
 );

@@ -5,6 +5,7 @@ const {
   fetchPlayers,
   changePlayerPhoto,
   deletePlayer,
+  modifyAttendanceCount,
 } = require("../controllers/playerController");
 const multer = require("multer");
 
@@ -21,5 +22,6 @@ router.get("/", fetchPlayers);
 router.get("/:teamId", fetchPlayers);
 router.get("/year/:yearOfBirth", fetchPlayers);
 router.delete("/:playerId", deletePlayer);
+router.post("/:playerId/attendance", modifyAttendanceCount);
 
 module.exports = router;
