@@ -19,8 +19,8 @@ router.use(requireAuth);
 
 router.post("/", createPlayer);
 router.post("/:playerId/image", upload.single("image"), changePlayerPhoto);
+router.get("/team/:teamId", fetchPlayers);
 router.get("/", fetchPlayers);
-router.get("/:teamId", fetchPlayers);
 router.get("/year/:yearOfBirth", fetchPlayers);
 router.delete("/:playerId", deletePlayer);
 router.post("/:playerId/attendance", modifyAttendanceCount);
