@@ -174,7 +174,6 @@ exports.modifyAttendanceCount = async (req, res) => {
 
 exports.getSessionAttendanceRate = async (req, res) => {
   const { playerId } = req.params;
-  console.log("Fetching session attendance rate for player:", playerId);
 
   try {
     const player = await Player.findById(playerId);
@@ -193,7 +192,6 @@ exports.getSessionAttendanceRate = async (req, res) => {
     );
 
     const attendanceRate = attendedSessions.length / playerSessions.length;
-    console.log("Attendance rate:", attendanceRate);
 
     const attendedSessionsCount = attendedSessions.length;
     const unAttendedSessionsCount =
