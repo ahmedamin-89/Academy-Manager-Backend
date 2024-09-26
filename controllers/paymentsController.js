@@ -104,6 +104,7 @@ exports.recordPayment = async (req, res) => {
 };
 
 // controllers/paymentController.js
+// controllers/paymentController.js
 
 exports.getPaymentStatus = async (req, res) => {
   try {
@@ -119,6 +120,23 @@ exports.getPaymentStatus = async (req, res) => {
     // Fetch the academy to get the base fees
     const academy = await Academy.findById(academyId);
     const baseFee = academy.fees;
+
+    // Extract query parameters for filtering
+    const teamId = req.query.teamId || null;
+    const search = req.query.search || "";
+    const status = req.query.status || null; // "Paid" or "Unpaid"
+
+    // Build the player query
+    const playerQuery = { academy: academyId };
+    if (teamId) {
+      playerQuery.team = teamId;
+    }
+    if (search) {
+      playerQuery.name = { $regex: search, $options: "i" }; // Case-insensitive search
+    }
+
+    // Fetch all players based on the query
+    const players = await Player.find(playerQuery).populate("team");
 
     // Fetch all MonthlyPayments for the academy and month
     const monthlyPayments = await MonthlyPayment.find({
@@ -140,11 +158,8 @@ exports.getPaymentStatus = async (req, res) => {
       paymentsByPlayer[playerId].push(payment);
     });
 
-    // Fetch all players in the academy
-    const players = await Player.find({ academy: academyId });
-
     // Prepare the payment status list
-    const paymentStatusList = players.map((player) => {
+    let paymentStatusList = players.map((player) => {
       const playerId = player._id.toString();
       const payments = paymentsByPlayer[playerId] || [];
 
@@ -164,11 +179,22 @@ exports.getPaymentStatus = async (req, res) => {
       return {
         playerId: player._id,
         name: player.name,
+        teamId: player.team ? player.team._id : null,
+        teamName: player.team ? player.team.name : null,
         paid,
         amountPaid,
         amountDue,
       };
     });
+
+    // Filter by payment status if 'status' query parameter is provided
+    if (status) {
+      if (status === "Paid") {
+        paymentStatusList = paymentStatusList.filter((item) => item.paid);
+      } else if (status === "Unpaid") {
+        paymentStatusList = paymentStatusList.filter((item) => !item.paid);
+      }
+    }
 
     res.status(200).json({ paymentStatusList });
   } catch (error) {
