@@ -84,6 +84,13 @@ const playerSchema = new Schema(
       default: 0,
       required: true,
     },
+    lastPaymentDate: {
+      type: Date,
+    },
+    appliedDiscountPercent: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

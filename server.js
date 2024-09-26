@@ -10,6 +10,7 @@ const playerRoutes = require("./routes/players");
 const coachRoutes = require("./routes/coaches");
 const trainingRoutes = require("./routes/trainings");
 const eventRoutes = require("./routes/events");
+const paymentRoutes = require("./routes/payments");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/players", playerRoutes);
 app.use("/api/coaches", coachRoutes);
 app.use("/api/trainings", trainingRoutes);
 app.use("/api/events", eventRoutes);
+app.use("/api/payments", paymentRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

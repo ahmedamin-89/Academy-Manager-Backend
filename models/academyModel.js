@@ -14,6 +14,10 @@ const academySchema = new Schema(
         ref: "Team",
       },
     ],
+    fees: {
+      type: Number,
+      default: 1000,
+    },
     players: [
       {
         type: Schema.Types.ObjectId,

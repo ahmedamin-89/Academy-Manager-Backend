@@ -25,11 +25,17 @@ const paymentSchema = new Schema({
     enum: ["monthly", "quarterly", "half-yearly", "yearly"],
     default: "monthly",
   },
-  status: {
-    type: String,
+  monthlyPayments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "MonthlyPayment",
+    },
+  ],
+
+  academy: {
+    type: Schema.Types.ObjectId,
+    ref: "Academy",
     required: true,
-    enum: ["pending", "paid", "overdue"],
-    default: "pending",
   },
 });
 
