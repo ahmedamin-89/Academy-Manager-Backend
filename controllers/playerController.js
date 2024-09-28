@@ -74,6 +74,34 @@ exports.createPlayer = async (req, res) => {
   }
 };
 
+exports.fetchPlayerById = async (req, res) => {
+  const { playerId } = req.params;
+
+  try {
+    const player = await Player.findById(playerId).lean();
+
+    if (!player) {
+      return res.status(404).json({ error: "Player not found" });
+    }
+
+    // If player has an image, generate a signed URL
+    if (player.imageName) {
+      const getObjectParams = {
+        Bucket: bucketName,
+        Key: player.imageName,
+      };
+      const command = new GetObjectCommand(getObjectParams);
+      const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+      player.imageUrl = url;
+    }
+
+    res.status(200).json({ player });
+  } catch (error) {
+    console.error("Error fetching player:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 exports.fetchPlayers = async (req, res) => {
   const user_id = req.user._id;
   const { teamId } = req.params;

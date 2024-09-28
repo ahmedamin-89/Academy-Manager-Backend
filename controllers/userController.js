@@ -64,6 +64,7 @@ exports.fetchUser = async (req, res) => {
           _id: 1,
           name: 1,
           teams: 1,
+          fees: 1,
         },
       },
       {
@@ -72,6 +73,7 @@ exports.fetchUser = async (req, res) => {
           name: 1,
           teams: 1,
           players: 1,
+          fees: 1,
           teams: {
             _id: 1,
             name: 1,

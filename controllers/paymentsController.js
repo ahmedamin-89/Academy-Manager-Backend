@@ -202,3 +202,19 @@ exports.getPaymentStatus = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+exports.fetchPlayerPayments = async (req, res) => {
+  try {
+    const { playerId } = req.params;
+
+    const player = await Player.findById(playerId).populate("payments");
+    if (!player) {
+      return res.status(404).json({ error: "Player not found." });
+    }
+
+    res.status(200).json({ payments: player.payments });
+  } catch (error) {
+    console.error("Error fetching player payments:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
