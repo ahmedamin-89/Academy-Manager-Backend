@@ -4,9 +4,14 @@ const Payment = require("../models/paymentModel");
 const MonthlyPayment = require("../models/monthlyPaymentModel");
 const Player = require("../models/playerModel");
 const Academy = require("../models/academyModel");
+const User = require("../models/userModel");
 
 exports.recordPayment = async (req, res) => {
   try {
+    const user_id = req.user._id;
+
+    const user = await User.findById(user_id);
+
     const { playerId } = req.params;
     const { amount, paymentType, paymentDate } = req.body;
 
@@ -65,6 +70,9 @@ exports.recordPayment = async (req, res) => {
       dueDate: new Date(paymentDate), // Adjust if needed
       paymentType: paymentType,
       academy: academy._id,
+      collectedBy: user_id,
+      collectedByName: user.name,
+      playerName: player.name,
     });
 
     // Create MonthlyPayment documents
@@ -79,6 +87,9 @@ exports.recordPayment = async (req, res) => {
         paymentDate: new Date(paymentDate),
         dueDate: dueDate,
         academy: academy._id,
+        collectedBy: user_id,
+        collectedByName: user.name,
+        playerName: player.name,
       });
 
       await monthlyPayment.save();
