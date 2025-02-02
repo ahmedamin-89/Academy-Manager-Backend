@@ -1,4 +1,3 @@
-const requireAuth = require("../middlewear/requireAuth");
 const User = require("../models/userModel");
 const Academy = require("../models/academyModel");
 const jwt = require("jsonwebtoken");
